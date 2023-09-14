@@ -1,0 +1,134 @@
+---
+title: "Start Project, Connect GitHub, Initialize Documentation"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{testing out vignettes}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Get Git
+
+First you need to set up a GitHub account on [GitHub](https://github.com/)
+
+Next, you'll need to install Git.  
+
+* check out the page [Getting Started - Installing Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) for help with 
+  this and links to the appropriate downloads. 
+* [HappyGitWithR](https://happygitwithr.com/install-git) has a nice page about options for installing Git. 
+  
+The Git-SCM website maintains downloadable files for Windows, Linux, and MacOS. 
+
+## Install or Upgrade R and RStudio
+
+### If you don't already have R and RStudio (Windows)
+
+Visit the R Project CRAN website at: https://cran.r-project.org/bin/windows/base/.
+Download the most recent R version. 
+Next, vist the [Posit website](https://posit.co/) and click the "Download RStudio" button. Run the download .exe files from your downloads folder and follow all instructions. 
+
+### If you need to update
+
+Check your current R version by typing: 
+```{r eval = FALSE}
+R.version.string
+```
+
+Visit the [R Project CRAN website](https://cran.r-project.org/bin/windows/base/) and see how far out of date you are. If you're more than 1 minor version (version 4.3.1 versus version 4.2.1) out of date, consider updating. Complete the same checks with the RStudio desktop, using the links above. 
+
+Next, update your R packages: 
+```{r eval = FALSE}
+update.packages(ask = FALSE, checkBuilt = TRUE)
+```
+
+## Connect Git
+
+Launch a shell from within RStudio. "Terminal" may be a selection next to the "console" window or you may need to select "Terminal" from the "Tools" dropdown menu.
+
+Next, use the [usethis package](https://usethis.r-lib.org/) to set up your Git username and email from inside the RStudio environment. 
+
+```{r eval = FALSE}
+install.packages("usethis")
+library(usethis)
+use_git_config(user.name = "Jane Smith", user.email = "jane@youremail.org")
+`````
+
+The email you provide **must** be the email associated with your GitHub account, but it's not explicitly necessary for the user name to be your GitHub user name. Your commits will be labeled with this user name so make sure it's helpful. 
+
+Within the terminal, set your default name for the initial branch in a new repository to "main". 
+
+```{r eval = FALSE}
+git config --global init.defaultBranch main
+`````
+
+## Install GitHub Desktop
+
+**Note - - You must be running a 64-bit OS to use GitHub Desktop**
+
+1. Visit the [download page for GitHub Desktop](https://desktop.github.com/)
+2. Click "Download for Windows" 
+3. Visit your computer's downloads folder and run the setup file
+4. GitHub desktop will launch after installation completes. 
+
+## Make sure you can "talk" to GitHub
+
+First, you'll need a personal access token (PAT). This serves as your password when not logging directly in to the GitHub website. 
+
+Visit: https://github.com/settings/profile and scroll down to select "Developer Settings" on the menu. Next select "Personal Access Tokens". Use the "Classic" option, if available. 
+
+Now, you'll generate your first PAT by selecting the option to generate a new token. Give it a somewhat descriptive name and then save the token somewhere you can find it again. *You absolutely must save the token outside of the Git environment as it will not display it again for you*. I email it to myself. 
+
+You will provide this PAT the next time a local Git operation asks for your password. You can also set it directly in the R environmental by calling a prompt to paste your PAT: 
+
+```{r eval = FALSE}
+gitcreds::gitcreds_set()
+`````
+
+If you are also using GitLab, you'll have to generate a seperate PAT from your online account and use it to login when editing GitLab repos.  
+
+A note about PATs and RStudio and GitHub (note that this might be old)
+from: https://rfortherestofus.com/2021/02/how-to-use-git-github-with-r
+
+    Now that you’ve created a Personal Access Token, we need to store it so that RStudio can access it and know to connect to your GitHub account. The gitcreds_set() function from the gitcreds package will help you here. You’ll enter your GitHub username and the Personal Access Token as your password (NOT your GitHub password, as I initially thought). Once you’ve done all of this, you have connected RStudio to GitHub!
+
+## Test your connection to GitHub
+
+[HappyGitWithR](https://happygitwithr.com/push-pull-github) has created a very detailed guide for making sure you can pull from and push to GitHub from your computer. Essentially the steps are: 
+
+1. Make a test repo on GitHub.com by clicking "Repositories" and then "New". 
+
+    + Now click the big green button that says “<> Code”. Copy a clone URL to your    clipboard. If you’re taking the default advice, copy the HTTPS URL. But if you’re opting for SSH, then make sure to copy the SSH URL.
+  
+2. Clone the repo to your local computer
+
+    + You can follow the steps in 11.2 of the linked HappyGitWithR page or simply go to "File" and "Clone Repository" in the menu options of GitHub Desktop. 
+    
+3. Make a local change, commit, and push
+
+## Tell RStudio you want to use Git
+
+RStudio can only act as a GUI front-end for Git if Git has been successfully installed AND RStudio can find it. Quit and re-launch RStudio to be sure you've opened RStudio after installing Git. 
+
+Within RStudio, go to "Tools" and "Global Options" and "Git/SVN". Check the box for "enable version control interface for RStudio projects". Browse to the location of your Git executable. On Windows, note that you do NOT want to use C:/Program Files/Git/cmd/git.exe. bin in the path. The "cmd" in the path is bad.
+
+## Make a new project 
+
+You can learn more about package authoring with RStudio at:
+http://r-pkgs.had.co.nz/
+
+Some useful keyboard shortcuts for package authoring:
+
+    Install Package:           'Ctrl + Shift + B'
+    Check Package:             'Ctrl + Shift + E'
+    Test Package:              'Ctrl + Shift + T'
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r eval = FALSE}
+library(testPackageWGitHub)
+```
