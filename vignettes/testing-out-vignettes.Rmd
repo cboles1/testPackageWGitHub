@@ -1,8 +1,9 @@
 ---
 title: "Start Project, Connect GitHub, Initialize Documentation"
 output: rmarkdown::html_vignette
+author: "Chelsie Boles, for internal LimnoTech use only"
 vignette: >
-  %\VignetteIndexEntry{testing out vignettes}
+  %\VignetteIndexEntry{Start Project, Connect GitHub, Initialize Documentation}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -189,11 +190,50 @@ add <- function(x, y) {
 ```
 Copying all the lines beginning with #' and substituting your own details will provide you the basic outline for your roxygen documentation. 
 
-Once you have at least one roxygen comment, run ```devtools::document()``` to generate (or update) your package’s .Rd files. 
+Once you have at least one roxygen comment, commit and push your changes THEN run ```devtools::document()``` or ```roxygen2::roxygenise()``` to generate (or update) your package’s .Rd files. 
 
-## Writing with RMarkdown
+Note that the above commands may call scripting commands that are not within functions. For example, my connectGit.R file simply stated: 
 
-f you would like to create PDF documents from R Markdown, you will need to have a LaTeX distribution installed. [TinyTeX](https://yihui.org/tinytex/) is a custom LaTeX distribution based on TeX Live that is small in size, but functions well in most cases, especially for R users.
+```{r eval = FALSE}
+use_git()
+use_github(protocol = 'https')
+```
+and calling the devtools command resulted in attempts to create a new GitHub repo. From the help files for roxygen2, I found the following: 
+
+    Note that roxygen2 is a dynamic documentation system: it works by inspecting loaded objects in the package. This means that you must be able to load the package in order to document it: see load for details. You can change the default strategy for your function with roxygen2 load option. Override the default off pkgload to use the source or installed strategies. 
+    
+If you're having issues, recommend you further dive into the help files for package Roxygen2, starting with examining the help file for function ```roxygenise()```. You may need to exclude certain lines with ```\donotrun{}```. 
+
+After running the roxygenise command, your "man" folder should be populated with Rd files for each function contained within the scripts of your R folder. You do not need to put each function in a separate script. Multiple roxygen skeletons can be placed in a single R script if there are multiple functions within that script. 
+
+## Initializing the Vignette
+
+Vignettes serve the following functions: 
+
+* A long-form guide to your package.
+* Function documentation is useful if you know the function name
+* A vignette explains how to use your package
+* Can describe the problem that your package is designed to solve, and then show the reader how to solve it.
+
+Vignettes are very simple to add to a project with the usethis package. You can add a vignette with the title "example" by running the following code: 
+
+```{r eval = FALSE}
+usethis::use_vignette("example")
+```
+
+Running this code will create a new vignette skeleton or article in ⁠vignettes/⁠. Articles are a special type of vignette that appear on pkgdown websites, but are not included in the package itself (because they are added to .Rbuildignore automatically).
+
+Note that you need to change the vignette title in both the ```title``` field and the ```\VignetteIndexEntry{}``` command.
+
+Besides the above information in the vignette, you also need to do two more things in your package DESCRIPTION file:
+
+    Specify VignetteBuilder: knitr in the DESCRIPTION file.
+
+    Add Suggests: knitr, rmarkdown in DESCRIPTION.
+
+The vignette output format does not have to be HTML. It can also be PDF, so you can use ```output: pdf_document```, too.
+
+If you would like to create PDF documents from R Markdown, you will need to have a LaTeX distribution installed. [TinyTeX](https://yihui.org/tinytex/) is a custom LaTeX distribution based on TeX Live that is small in size, but functions well in most cases, especially for R users.
 
 ```{r eval = FALSE}
 tinytex::install_tinytex()
@@ -201,7 +241,25 @@ tinytex::install_tinytex()
 # tinytex::uninstall_tinytex()
 ```
 
-## Handy Links and Info
+More about vignettes can be read in the [vignettes chapter](https://r-pkgs.org/vignettes.html) of the R Packages book. 
+
+## Editing your Vignette with RMarkdown
+
+There are two cheat sheets that are incredibly helpful when editing your Rmd vignette with markdown: 
+
+https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf
+
+https://raw.githubusercontent.com/rstudio/cheatsheets/main/rmarkdown.pdf 
+
+In addition, there are two excellent online books available: 
+
+[R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/)
+
+[R Markdown Cookbook](https://bookdown.org/yihui/rmarkdown-cookbook/)
+
+You can frequently check the html version of your vignette by clicking the 'knit' button at the top of the screen or Ctrl+Shift+K. 
+
+## Other Handy Links and Info
 
 [Gitlab Tutorial | GitLab Tutorial for beginners | Complete Course |](https://www.youtube.com/watch?v=ANA_kZbyh1E)
 
@@ -221,13 +279,18 @@ tinytex::install_tinytex()
 
 [Google’s R Style Guide](https://google.github.io/styleguide/Rguide.html) 
 
+[Building Tidy Tools Presentation](https://rstudio-conf-2022.github.io/build-tidy-tools/materials/day-1-session-2-doc-minimal.html#/title-slide)
+Use your left and right arrows to navigate. 
+
 ## References
 
 "Happy Git and GitHub for the useR" was written by Jenny Bryan, the STAT 545 TAs, Jim Hester. https://happygitwithr.com/ 
 
 Wickham H, Danenberg P, Csárdi G, Eugster M (2022). roxygen2: In-Line Documentation for R. https://roxygen2.r-lib.org/, https://github.com/r-lib/roxygen2. 
 
-Yihui Xie, Christophe Dervieux, Emily Riederer. 2023. *R Markdown Cookbook*. https://bookdown.org/yihui/rmarkdown-cookbook/ 
+Hadley Wickham and Jennifer Bryan. 2023. R Packages (2e). https://r-pkgs.org/ 
+
+Yihui Xie, Christophe Dervieux, Emily Riederer. 2023. R Markdown Cookbook. https://bookdown.org/yihui/rmarkdown-cookbook/ 
 
 ```{r include = FALSE}
 knitr::opts_chunk$set(
@@ -235,8 +298,6 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
-
-
 
 
 ```{r eval = FALSE, include = FALSE}
