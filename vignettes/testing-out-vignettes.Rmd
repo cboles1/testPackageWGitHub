@@ -189,7 +189,7 @@ add <- function(x, y) {
 ```
 Copying all the lines beginning with #' and substituting your own details will provide you the basic outline for your roxygen documentation. 
 
-Once you have at least one roxygen comment, run ```devtools::document()``` to generate (or update) your package’s .Rd files
+Once you have at least one roxygen comment, run ```devtools::document()``` to generate (or update) your package’s .Rd files. 
 
 ## Writing with RMarkdown
 
