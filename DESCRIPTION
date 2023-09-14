@@ -1,13 +1,17 @@
 Package: testPackageWGitHub
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Guide to Connecting with GitHub
 Version: 0.1.0
 Author: Who wrote it
 Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Description: This contains useful code examples for connecting a project with 
+              GitHub and then initializing documentation 
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
 URL: https://github.com/cboles1/testPackageWGitHub
 BugReports: https://github.com/cboles1/testPackageWGitHub/issues
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
