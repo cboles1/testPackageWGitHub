@@ -124,8 +124,7 @@ Create either a test R script or an actual R script containing a function you'd 
 * Click "commit" 
 * Type a descriptive commit message and click "commit" again. 
 
-You can learn more about package authoring with RStudio at:
-http://r-pkgs.had.co.nz/
+You can learn more about package authoring with RStudio at http://r-pkgs.had.co.nz/ or by checking out the [R Packages book](https://r-pkgs.org/). 
 
 Some useful keyboard shortcuts for package authoring:
 
@@ -147,6 +146,51 @@ use_readme_rmd()
 
 After running the readme command, you will need to go 'knit' the readme file and you might need to edit the example. 
 
+## Adding documentation to your R function with roxygen2
+
+To get started, first read [vignette("roxygen2")](https://roxygen2.r-lib.rg/articles/roxygen2.html). I also recommend reading the [Function Documentation](https://r-pkgs.org/man.html) section of the R Packages book. 
+
+You'll need to install roxygen2 before getting started: 
+```{r eval = FALSE}
+# Install devtools from CRAN
+install.packages("roxygen2")
+
+# Or the development version from GitHub:
+# install.packages("devtools")
+devtools::install_github("r-lib/roxygen2")
+```
+You'll need to add the appropriate comments to your R script files to be able to use roxygen to create documentation. You can do that one of two ways. The easiest is to place your cursor inside your function, then click on "code" in the menu and select "insert roxygen skeleton" or Alt+Ctrl+Shift+R.  
+
+In the example function below, you would put your cursor before the "for": 
+```{r eval = FALSE}
+new.function <- function(a) {
+  for(i in 1:a) {
+    b <- i^2
+    print(b)
+  }
+}	
+```
+Using that method will allow R to pre-populate some of the function documentation. Note that usually you write your function first, *then* the documentation. 
+
+You can also manually place them into your R scripts. Roxygen comment lines always start with #' (the usual # for a comment, followed immediately by a single quote '). I've copied in an example from the R Packages book, below: 
+
+```{r eval = FALSE}
+#' Add together two numbers
+#' 
+#' @param x A number.
+#' @param y A number.
+#' @returns A numeric vector.
+#' @examples
+#' add(1, 1)
+#' add(10, 1)
+add <- function(x, y) {
+  x + y
+}
+```
+Copying all the lines beginning with #' and substituting your own details will provide you the basic outline for your roxygen documentation. 
+
+Once you have at least one roxygen comment, run ```devtools::document()``` to generate (or update) your package’s .Rd files
+
 ## Writing with RMarkdown
 
 f you would like to create PDF documents from R Markdown, you will need to have a LaTeX distribution installed. [TinyTeX](https://yihui.org/tinytex/) is a custom LaTeX distribution based on TeX Live that is small in size, but functions well in most cases, especially for R users.
@@ -157,16 +201,31 @@ tinytex::install_tinytex()
 # tinytex::uninstall_tinytex()
 ```
 
-## Handy Links
+## Handy Links and Info
+
 [Gitlab Tutorial | GitLab Tutorial for beginners | Complete Course |](https://www.youtube.com/watch?v=ANA_kZbyh1E)
 
 [Planning and Tracking with Projects, GitHub](https://docs.github.com/en/issues/planning-and-tracking-with-projects)
 
 [Talk recordings and workshop materials from rstudio::conf(2022)](https://posit.co/blog/talks-and-workshops-from-rstudio-conf-2022/)
 
+[A List of Featured R Books on BOOKDOWN](https://bookdown.org/)
+
+[Camel Case vs. Snake Case](https://www.baeldung.com/kotlin/convert-camel-case-snake-case)
+
+    Camel case is a convention where words are concatenated together, and the first letter of each subsequent word is capitalized, such as “FlywayMigrator“. Camel case is the naming convention applied by Java and Kotlin.
+
+    On the other hand, snake case is a convention that underscores separate words, such as “flyway_migrator“. Some programming languages, such as Python, conventionally use it for variable names, function names, etc.
+    
+[The TidyVerse Style Guide](https://style.tidyverse.org/)
+
+[Google’s R Style Guide](https://google.github.io/styleguide/Rguide.html) 
+
 ## References
 
 "Happy Git and GitHub for the useR" was written by Jenny Bryan, the STAT 545 TAs, Jim Hester. https://happygitwithr.com/ 
+
+Wickham H, Danenberg P, Csárdi G, Eugster M (2022). roxygen2: In-Line Documentation for R. https://roxygen2.r-lib.org/, https://github.com/r-lib/roxygen2. 
 
 Yihui Xie, Christophe Dervieux, Emily Riederer. 2023. *R Markdown Cookbook*. https://bookdown.org/yihui/rmarkdown-cookbook/ 
 
