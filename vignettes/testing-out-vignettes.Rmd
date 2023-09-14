@@ -51,7 +51,7 @@ Next, use the [usethis package](https://usethis.r-lib.org/) to set up your Git u
 install.packages("usethis")
 library(usethis)
 use_git_config(user.name = "Jane Smith", user.email = "jane@youremail.org")
-`````
+```
 
 The email you provide **must** be the email associated with your GitHub account, but it's not explicitly necessary for the user name to be your GitHub user name. Your commits will be labeled with this user name so make sure it's helpful. 
 
@@ -59,7 +59,7 @@ Within the terminal, set your default name for the initial branch in a new repos
 
 ```{r eval = FALSE}
 git config --global init.defaultBranch main
-`````
+```
 
 ## Install GitHub Desktop
 
@@ -82,7 +82,7 @@ You will provide this PAT the next time a local Git operation asks for your pass
 
 ```{r eval = FALSE}
 gitcreds::gitcreds_set()
-`````
+```
 
 If you are also using GitLab, you'll have to generate a seperate PAT from your online account and use it to login when editing GitLab repos.  
 
@@ -113,6 +113,17 @@ Within RStudio, go to "Tools" and "Global Options" and "Git/SVN". Check the box 
 
 ## Make a new project 
 
+Click "file" and "new project". You'll want a new directory and a new project. Name your new directory and make sure to check the box that asks if you want to create a git repo. You should have a "git" tab alongside your "environment" and "history" tabs. 
+
+If you'd like a video, start watching [this one](https://www.youtube.com/watch?v=kL6L2MNqPHg) at time mark 2:30. 
+
+Create either a test R script or an actual R script containing a function you'd like to create. Save the R script and make an initial test commit using the following steps: 
+
+* Go to the "git" tab
+* Stage your newly changed files by selecting the check boxes next to each file you'd like to commit changes to. You should see the icon in the "status" column shift or change. 
+* Click "commit" 
+* Type a descriptive commit message and click "commit" again. 
+
 You can learn more about package authoring with RStudio at:
 http://r-pkgs.had.co.nz/
 
@@ -122,13 +133,53 @@ Some useful keyboard shortcuts for package authoring:
     Check Package:             'Ctrl + Shift + E'
     Test Package:              'Ctrl + Shift + T'
 
-```{r, include = FALSE}
+## Connect your new project with your GitHub repository
+
+Run the included file "connectGit.R" or the following set of commands: 
+
+```{r eval = FALSE}
+library(usethis)
+library(devtools)
+use_git()
+use_github(protocol = 'https')
+use_readme_rmd()
+```
+
+After running the readme command, you will need to go 'knit' the readme file and you might need to edit the example. 
+
+## Writing with RMarkdown
+
+f you would like to create PDF documents from R Markdown, you will need to have a LaTeX distribution installed. [TinyTeX](https://yihui.org/tinytex/) is a custom LaTeX distribution based on TeX Live that is small in size, but functions well in most cases, especially for R users.
+
+```{r eval = FALSE}
+tinytex::install_tinytex()
+# to uninstall TinyTeX, run
+# tinytex::uninstall_tinytex()
+```
+
+## Handy Links
+[Gitlab Tutorial | GitLab Tutorial for beginners | Complete Course |](https://www.youtube.com/watch?v=ANA_kZbyh1E)
+
+[Planning and Tracking with Projects, GitHub](https://docs.github.com/en/issues/planning-and-tracking-with-projects)
+
+[Talk recordings and workshop materials from rstudio::conf(2022)](https://posit.co/blog/talks-and-workshops-from-rstudio-conf-2022/)
+
+## References
+
+"Happy Git and GitHub for the useR" was written by Jenny Bryan, the STAT 545 TAs, Jim Hester. https://happygitwithr.com/ 
+
+Yihui Xie, Christophe Dervieux, Emily Riederer. 2023. *R Markdown Cookbook*. https://bookdown.org/yihui/rmarkdown-cookbook/ 
+
+```{r include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 ```
 
-```{r eval = FALSE}
+
+
+
+```{r eval = FALSE, include = FALSE}
 library(testPackageWGitHub)
 ```
