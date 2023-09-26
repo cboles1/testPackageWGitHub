@@ -132,6 +132,7 @@ Some useful keyboard shortcuts for package authoring:
     Install Package:           'Ctrl + Shift + B'
     Check Package:             'Ctrl + Shift + E'
     Test Package:              'Ctrl + Shift + T'
+    Load Package:              'Ctrl + Shift + L'
 
 ## Connect your new project with your GitHub repository
 
@@ -160,7 +161,9 @@ install.packages("roxygen2")
 # install.packages("devtools")
 devtools::install_github("r-lib/roxygen2")
 ```
-You'll need to add the appropriate comments to your R script files to be able to use roxygen to create documentation. You can do that one of two ways. The easiest is to place your cursor inside your function, then click on "code" in the menu and select "insert roxygen skeleton" or Alt+Ctrl+Shift+R.  
+You'll need to add the appropriate comments to your R script files to be able to use roxygen to create documentation. You can do that one of two ways. The easiest is to place your cursor inside your function, then click on "code" in the menu and select "insert roxygen skeleton" or the keyboard shortcut: 
+
+    'Alt+Ctrl+Shift+R'  
 
 In the example function below, you would put your cursor before the "for": 
 ```{r eval = FALSE}
@@ -171,7 +174,9 @@ new.function <- function(a) {
   }
 }	
 ```
-Using that method will allow R to pre-populate some of the function documentation. Note that usually you write your function first, *then* the documentation. 
+Using that method will allow R to pre-populate some of the function documentation. Note that usually you write your function first, *then* the documentation. You will also need to load your package before you can run a roxygen command. Do this by going to "Build" and selecting "Load All" or by using the keyboard shortcut: 
+
+    'Ctrl + Shift + L'
 
 You can also manually place them into your R scripts. Roxygen comment lines always start with #' (the usual # for a comment, followed immediately by a single quote '). I've copied in an example from the R Packages book, below: 
 
