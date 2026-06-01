@@ -7,6 +7,12 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
+Last updated: June 1 2026
+
+Summary of last update: No longer recommending use of use_readme_rmd() due to issues with hook commmit files. 
+
+Stored in repo: testPackageWGitHub
+
 
 ## Get Git
 
@@ -71,11 +77,13 @@ git config --global init.defaultBranch main
 3. Visit your computer's downloads folder and run the setup file
 4. GitHub desktop will launch after installation completes. 
 
+Note that there are other Git clients out there (as of last update, these include GitKraken and SourceTree). Git and your Git client are not the same thing, just like R and RStudio are not the same thing. 
+
 ## Make sure you can "talk" to GitHub
 
 First, you'll need a personal access token (PAT). This serves as your password when not logging directly in to the GitHub website. 
 
-Visit: https://github.com/settings/profile and scroll down to select "Developer Settings" on the menu. Next select "Personal Access Tokens". Use the "Classic" option, if available. 
+Visit: https://github.com/settings/profile and scroll down to select "Developer Settings" on the menu. Next select "Personal Access Tokens". Use the "Classic" option, if available. Note that this link may change over time, however you're always looking for "Personal Access Tokens". 
 
 Now, you'll generate your first PAT by selecting the option to generate a new token. Give it a somewhat descriptive name and then save the token somewhere you can find it again. *You absolutely must save the token outside of the Git environment as it will not display it again for you*. I email it to myself. 
 
@@ -84,6 +92,8 @@ You will provide this PAT the next time a local Git operation asks for your pass
 ```{r eval = FALSE}
 gitcreds::gitcreds_set()
 ```
+
+You will paste your PAT in response to the diaglogue generated in the console. 
 
 If you are also using GitLab, you'll have to generate a seperate PAT from your online account and use it to login when editing GitLab repos.  
 
@@ -104,7 +114,9 @@ from: https://rfortherestofus.com/2021/02/how-to-use-git-github-with-r
 
     + You can follow the steps in 11.2 of the linked HappyGitWithR page or simply go to "File" and "Clone Repository" in the menu options of GitHub Desktop. 
     
-3. Make a local change, commit, and push
+3. Make a local change, commit, and push - I suggest you add a line to README and verify that Git notices the change. 
+
+Note that happygitwithR currently recommends HTTPS to get working quickly when you first start working with Git/GitHub. 
 
 ## Tell RStudio you want to use Git
 
@@ -112,7 +124,26 @@ RStudio can only act as a GUI front-end for Git if Git has been successfully ins
 
 Within RStudio, go to "Tools" and "Global Options" and "Git/SVN". Check the box for "enable version control interface for RStudio projects". Browse to the location of your Git executable. On Windows, note that you do NOT want to use C:/Program Files/Git/cmd/git.exe. bin in the path. The "cmd" in the path is bad.
 
-## Make a new project 
+## Connect your new project with an existing GitHub repository -- updated 6/1/26 
+
+Once you have made your new repository on GitHub, complete the following actions in RStudio IDE:  
+
+In RStudio, start a new Project:
+
+    File > New Project > Version Control > Git. In the “repository URL” paste the URL of your new GitHub repository. It will be something like this https://github.com/jennybc/myrepo.git.
+    Be intentional about where you create this Project.
+    I suggest you “Open in new session”.
+    Click “Create Project” to create a new directory, which will be all of these things:
+        a directory or “folder” on your computer
+        a Git repository, linked to a remote GitHub repository
+        an RStudio Project
+    In the absence of other constraints, I suggest that all of your R projects have exactly this set-up.
+
+This should download the README.md file that we created on GitHub in the previous step. Look in RStudio’s file browser pane for the README.md file.
+
+Source for this section: https://happygitwithr.com/new-github-first 
+
+## Other ways to practice making a new project within RStudio IDE 
 
 Click "file" and "new project". You'll want a new directory and a new project. Name your new directory and make sure to check the box that asks if you want to create a git repo. You should have a "git" tab alongside your "environment" and "history" tabs. 
 
@@ -134,19 +165,6 @@ Some useful keyboard shortcuts for package authoring:
     Test Package:              'Ctrl + Shift + T'
     Load Package:              'Ctrl + Shift + L'
 
-## Connect your new project with your GitHub repository
-
-Run the included file "connectGit.R" or the following set of commands: 
-
-```{r eval = FALSE}
-library(usethis)
-library(devtools)
-use_git()
-use_github(protocol = 'https')
-use_readme_rmd()
-```
-
-After running the readme command, you will need to go 'knit' the readme file and you might need to edit the example. 
 
 ## Adding documentation to your R function with roxygen2
 
